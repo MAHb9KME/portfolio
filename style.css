@@ -3,6 +3,7 @@
 
 /* Сброс стилей START */
 
+
 /* Сброс стилей END */
 
 /* critical.css START */
@@ -70,11 +71,14 @@ main {
     font-weight: 500;
     line-height: 110%;
     letter-spacing: -0.02em;
+    margin: 0;
+}
+
+.title span {
     background: linear-gradient(135deg, #09b900 33%, #009000 66%, #36a200);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     color: #13ba00;
-    margin: 0;
 }
 
 .xtitle {
@@ -87,6 +91,15 @@ main {
 .xsubtitle {
     position: relative;
 }
+.xsubtitle p {
+    transform: translate(0px, 120%); 
+    opacity: 0; 
+    transition: all 0.8s ease 0s; 
+}
+.xsubtitle._active p { 
+    transform: translate(0px, 0px); 
+    opacity: 1; 
+} 
 
 .xtitle::before,
 .xtitle::after,
@@ -363,6 +376,17 @@ input {
     border-bottom: 2px solid #13ba00;
     transition: .2s width;
 }
+.form-line {}
+.form-line._anim-items .form-line__field {
+    transform: translate(0px, 120%);
+    transition: all 0.3s ease 0s;
+    opacity: 0;
+}
+.form-line._active .form-line__field {
+    transform: translate(0px, 0%);
+    opacity: 1;
+}
+
 .form-line .form-line__field:focus + .form-line__label {
     width: 100%;
 }
@@ -623,6 +647,37 @@ hr {
 }
 
 /* KeyFrames START */
+
+@keyframes slide-in-elliptic-bottom-fwd {
+  0% {
+    -webkit-transform: translateY(600px) rotateX(30deg) scale(0);
+            transform: translateY(600px) rotateX(30deg) scale(0);
+    -webkit-transform-origin: 50% 100%;
+            transform-origin: 50% 100%;
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0) rotateX(0) scale(1);
+            transform: translateY(0) rotateX(0) scale(1);
+    -webkit-transform-origin: 50% -1400px;
+            transform-origin: 50% -1400px;
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in-center {
+  0% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    opacity: 1;
+  }
+}
+
 @keyframes bounce {
     0% {
         -webkit-transform: translateY(0);
@@ -1132,6 +1187,7 @@ hr {
     flex-direction: column;
     padding: 0;
     margin: 0;
+    row-gap: 20px;
 }
 .menu__burger {
     display: none;
@@ -1200,6 +1256,11 @@ hr {
 .social__link {
     width: 25px;
     display: block;
+    transition: .2s all;
+    transform: scale(1);
+}
+.social__link:hover {
+    transform: scale(1.2);
 }
 
 .main {
@@ -1312,21 +1373,25 @@ html.loaded .hero__title {
     transform: translateY(20px);
     opacity: 0;
 }
-.hero__button {
+.hero__wrbutton {
+    display: inline-block;
+    vertical-align: top;
     transition: opacity 0.5s 1.1s , -webkit-transform 0.5s 1.1s;
     transition: opacity 0.5s 1.1s , transform 0.5s 1.1s;
     transition: opacity 0.5s 1.1s , transform 0.5s 1.1s , -webkit-transform 0.5s 1.1s;
     opacity: 0;
     transform: translateY(20px);
 }
+.hero__button {
+    transition: .2s all;
+}
 
 .hero__button:hover {
-    transition: all .2s 0s !important;
-    transform: scale(1.08) !important;
+    transform: scale(1.08);
 }
 
 html.loaded .hero__subtitle,
-html.loaded .hero__button {
+html.loaded .hero__wrbutton {
     -webkit-transform: translateY(0px);
     -ms-transform: translateY(0px);
     transform: translateY(0px);
@@ -1391,9 +1456,13 @@ html.loaded .hero__button {
     position: absolute;
     top: 0;
     left: auto;
-    right: -220px;
+    right: -100%;
     bottom: 0;
     z-index: 1;
+    transition: .7s all ease-out;
+}
+.portfolio._active .portfolio__wrhead::after {
+    right: 0;
 }
 .portfolio__head {
     position: relative;
@@ -1430,6 +1499,20 @@ html.loaded .hero__button {
     position: relative;
     overflow: hidden;
 }
+
+
+.portfolio__item._anim-items {
+    opacity: 0;
+}
+.portfolio__item._active {
+    /*-webkit-animation: slide-in-elliptic-bottom-fwd 0.75s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+            animation: slide-in-elliptic-bottom-fwd 0.75s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;*/
+            /*opacity: 1;*/
+
+            -webkit-animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+            animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
 .portfolio__item:hover .portfolio__img {
     transform: scale(1.1);
 }
@@ -1522,7 +1605,7 @@ html.loaded .hero__button {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    min-height: 80vh;
+    min-height: 70vh;
     position: relative;
 }
 .about::after {
@@ -1534,10 +1617,16 @@ html.loaded .hero__button {
     display: inline-block;
     vertical-align: middle;
     position: absolute;
-    left: 0;
+    left: 100%;
     bottom: 0;
     z-index: 1;
+    transition: 1s all ease-out;
+    /*-webkit-text-stroke: 0.5px #13ba00;*/
 }
+.about._active::after {
+    left: 0;
+}
+
 .about .tags--top::after {
     display: none;
 }
@@ -1554,6 +1643,8 @@ html.loaded .hero__button {
 }
 .about__subtitle {
 }
+
+
 .about__projects {
 }
 
@@ -1601,7 +1692,7 @@ html.loaded .hero__button {
     width: calc(50% - 6px);
 }
 .form__textarea {
-    width: calc(100% - 6px);;
+    width: calc(100% - 6px);
     margin: 0px 3px 15px;
     position: relative;
 }
@@ -1611,6 +1702,16 @@ html.loaded .hero__button {
 
 .form .form__button {
     margin: 0 3px 0 auto;
+}
+
+.form__button._anim-items {
+    opacity: 0;
+    position: relative;
+    bottom: -50px;
+}
+.form__button._active {
+    bottom: 0;
+    opacity: 1;
 }
 
 .map {
@@ -1631,4 +1732,29 @@ html.loaded .hero__button {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+
+
+/* Анимация */ 
+._fade-come-text { 
+    transform: translate(0px, 120%); 
+    opacity: 0; 
+    transition: all 0.8s ease 0s; 
+} 
+._anim-items._active._fade-come-text { 
+    transform: translate(0px, 0px); 
+    opacity: 1; 
+} 
+.imagination__image._anim-items._active  { 
+    -webkit-animation: jello-vertical 0.7s both; 
+    animation: jello-vertical 0.7s both; 
+} 
+.ai-promt__list._anim-items._active .ai-promt__picture { 
+    -webkit-animation: jello-vertical 0.7s both; 
+    animation: jello-vertical 0.7s both; 
+} 
+.imagination__col._anim-items._active .imagination__name { 
+    transform: translate(0px, 0px); 
+    opacity: 1; 
 }

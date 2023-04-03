@@ -291,37 +291,37 @@ $(function(){
 	}
 
 	window.onload = function () {
-    // Получаем все элементы с дата-атрибутом data-bg
-    let images = document.querySelectorAll('[data-bg]');
-    // Проходимся по каждому
-    for (let i = 0; i < images.length; i++) {
-        // Получаем значение каждого дата-атрибута
-        let image = images[i].getAttribute('data-bg');
-        // Каждому найденному элементу задаем свойство background-image с изображение формата jpg
-        images[i].style.backgroundImage = 'url(' + image + ')';
-    }
+	    // Получаем все элементы с дата-атрибутом data-bg
+	    let images = document.querySelectorAll('[data-bg]');
+	    // Проходимся по каждому
+	    for (let i = 0; i < images.length; i++) {
+	        // Получаем значение каждого дата-атрибута
+	        let image = images[i].getAttribute('data-bg');
+	        // Каждому найденному элементу задаем свойство background-image с изображение формата jpg
+	        images[i].style.backgroundImage = 'url(' + image + ')';
+	    }
 
-    // Проверяем, является ли браузер посетителя сайта Firefox и получаем его версию
-    let isitFirefox = window.navigator.userAgent.match(/Firefox\/([0-9]+)\./);
-    let firefoxVer = isitFirefox ? parseInt(isitFirefox[1]) : 0;
+	    // Проверяем, является ли браузер посетителя сайта Firefox и получаем его версию
+	    let isitFirefox = window.navigator.userAgent.match(/Firefox\/([0-9]+)\./);
+	    let firefoxVer = isitFirefox ? parseInt(isitFirefox[1]) : 0;
 
-    // Если есть поддержка Webp или браузер Firefox версии больше или равно 65
-    if (canUseWebp() || firefoxVer >= 65) {
-        // Делаем все то же самое что и для jpg, но уже для изображений формата Webp
-        let imagesWebp = document.querySelectorAll('[data-bg-webp]');
-        for (let i = 0; i < imagesWebp.length; i++) {
-            let imageWebp = imagesWebp[i].getAttribute('data-bg-webp');
-            imagesWebp[i].style.backgroundImage = 'url(' + imageWebp + ')';
-        }
-    }
-};
-
-
+	    // Если есть поддержка Webp или браузер Firefox версии больше или равно 65
+	    if (canUseWebp() || firefoxVer >= 65) {
+	        // Делаем все то же самое что и для jpg, но уже для изображений формата Webp
+	        let imagesWebp = document.querySelectorAll('[data-bg-webp]');
+	        for (let i = 0; i < imagesWebp.length; i++) {
+	            let imageWebp = imagesWebp[i].getAttribute('data-bg-webp');
+	            imagesWebp[i].style.backgroundImage = 'url(' + imageWebp + ')';
+	        }
+	    }
+	};
 
 
-	// Adding animation to H1 tag
+
+
+	// Добавление анимации к тегу H1
 	function startAnimation() {
-	  var blasts = document.querySelectorAll(".main-blast .blast");
+	  var blasts = document.querySelectorAll(".hero__title.main-blast .blast");
 	  var i = 0;
 	  var logoAnimation = false;
 
@@ -359,7 +359,7 @@ $(function(){
 	  addAnimationClass();
 	}
 
-	// Addind class loaded when the page were fully loaded
+	// Добавление класса loaded когда страница полность загружена
 	function addLoadedClass() {
 		window.addEventListener("load", function () {
 			setTimeout(function () {
@@ -371,7 +371,7 @@ $(function(){
 
 	addLoadedClass();
 
-	// Add class rubberBand on hover
+	// Эффект при наведении на каждую букву
 	function addAnimationClass() {
 	  var blasts = document.querySelectorAll(".main-blast .blast");
 	  var timeoutIds = {};
@@ -403,13 +403,94 @@ $(function(){
 
 	addAnimationClass();
 
-	// Removing basic classes from main letter
+	// Для главной буквы H1 отключаем доп анимацию
 	const animationLogo = document.querySelector('.hero__highlight');
 
 	animationLogo.addEventListener('mouseover', function() {
 	  this.classList.remove('animation-logo');
 	  this.classList.remove('bounceIn');
 	});
+
+
+
+
+	// Добавление анимации к последующим Title
+	function startAnimationTitle() {
+		var blasts = document.querySelectorAll(".main-blast._active .blast");
+		var i = 0;
+		var logoAnimation = false;
+
+		function addAnimationClass() {
+			if (i >= blasts.length) {
+		  	return;
+		}
+
+	    blasts[i].classList.add("animated", "bounceIn");
+	    blasts[i].style.opacity = 1;
+
+	    i++;
+
+	    if (i === blasts.length) {
+	      setTimeout(function () {
+	        for (var j = 0; j < blasts.length; j++) {
+	            blasts[j].classList.remove("animated", "bounceIn");
+	        }
+	      }, 100);
+	    }
+
+	    setTimeout(addAnimationClass, 100);
+	  }
+
+	  addAnimationClass();
+	}
+
+	// Запуск анимации к последующим Title, один раз при скролле
+	const animItems = document.querySelectorAll("._anim-items");
+	if (animItems.length > 0) {
+	  function animOnScroll() {
+	    for (let index = 0; index < animItems.length; index++) {
+	      const animItem = animItems[index];
+	      const animItemHeight = animItem.offsetHeight;
+	      const animItemOffset = offset(animItem).top;
+	      const animStart = 4;
+	      let animItemPoint = window.innerHeight - animItemHeight / animStart;
+	      if (animItemHeight > window.innerHeight) {
+	        animItemPoint = window.innerHeight - window.innerHeight / animStart;
+	      }
+	      if (animItem.classList.contains("_active") &&
+	          !animItem.classList.contains("_animate-once") &&
+	          !animItem.classList.contains("animated")) {
+	        startAnimationTitle();
+	        animItem.classList.add("_animate-once");
+	        animItem.classList.add("animated");
+	      }
+	      if (pageYOffset > animItemOffset - animItemPoint &&
+	          pageYOffset < animItemOffset + animItemHeight) {
+	        animItem.classList.add("_active");
+	      } else {
+	        if (animItem.classList.contains("animated")) {
+	          animItem.classList.remove("animated");
+	        }
+	        /*if(!animItem.classList.contains('_anim-no-hide')) { animItem.classList.remove('_active') }*/
+	      }
+	    }
+	  }
+	  window.addEventListener("scroll", animOnScroll);
+	}
+
+
+	// Функция рассчета скролла
+	function offset(el) { 
+		const rect = el.getBoundingClientRect(), 
+		scrollLeft = window.pageXOffset || document.documentElement.scrollLeft, 
+		scrollTop = window.pageYOffset || document.documentElement.scrollTop; 
+		return { top: rect.top + scrollTop, left: rect.left + scrollLeft } 
+	} 
+	
+	// Инициализация 
+	setTimeout( function(){ 
+	    animOnScroll(); 
+	}, 300 )
 
 
 
