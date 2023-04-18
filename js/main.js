@@ -59,27 +59,6 @@ function tpaneScroll()
 
 $(function(){
 	
-	// fancybox
-
-	jQuery(".fancybox").fancybox(
-	{
-		'padding'			: 20,
-		'width'				: 250,
-		'height'			: "auto",
-		'autoDimensions'	: false,
-		'centerOnScroll'	: 'yes',
-		'titleShow'			: false,
-		'touch'				: false
-	})
-
-    jQuery('.gallery-icon a').fancybox(
-	{
-		'overlayShow': true, 
-		'hideOnContentClick': true, 
-		'overlayOpacity': 0.85
-	})
-
-	
 	tpaneScroll()
 	$(window).resize(function(){tpaneScroll()})
 	$(document).scroll(function(){tpaneScroll()})
@@ -330,46 +309,51 @@ $(function(){
 
 	// Добавление анимации к тегу H1
 	function startAnimation() {
-	  var blasts = document.querySelectorAll(".hero__title.main-blast .blast");
-	  var i = 0;
-	  var logoAnimation = false;
+      let heroTitle = document.querySelector('.hero__title');
+      if (heroTitle) 
+      {
 
-	  function addAnimationClass() {
-	    if (i >= blasts.length) {
-	      if (logoAnimation) {
-	        document.querySelector(".hero__highlight").classList.add("animation-logo");
-	      }
-	      return;
-	    }
+		  var blasts = document.querySelectorAll(".hero__title.main-blast .blast");
+		  var i = 0;
+		  var logoAnimation = false;
 
-	    if (blasts[i].classList.contains("hero__highlight")) {
-	      logoAnimation = true;
-	      blasts[i].classList.add("animation-logo");
-	    }
+		  function addAnimationClass() {
+		    if (i >= blasts.length) {
+		      if (logoAnimation) {
+		        document.querySelector(".hero__highlight").classList.add("animation-logo");
+		      }
+		      return;
+		    }
 
-	    blasts[i].classList.add("animated", "bounceIn");
-	    blasts[i].style.opacity = 1;
+		    if (blasts[i].classList.contains("hero__highlight")) {
+		      logoAnimation = true;
+		      blasts[i].classList.add("animation-logo");
+		    }
 
-	    i++;
+		    blasts[i].classList.add("animated", "bounceIn");
+		    blasts[i].style.opacity = 1;
 
-	    if (i === blasts.length) {
-	      setTimeout(function () {
-	        for (var j = 0; j < blasts.length; j++) {
-	          if (!blasts[j].classList.contains("hero__highlight")) {
-	            blasts[j].classList.remove("animated", "bounceIn");
-	          }
-	        }
-	      }, 100);
-	    }
+		    i++;
 
-	    setTimeout(addAnimationClass, 100);
-	  }
+		    if (i === blasts.length) {
+		      setTimeout(function () {
+		        for (var j = 0; j < blasts.length; j++) {
+		          if (!blasts[j].classList.contains("hero__highlight")) {
+		            blasts[j].classList.remove("animated", "bounceIn");
+		          }
+		        }
+		      }, 100);
+		    }
 
-	  addAnimationClass();
+		    setTimeout(addAnimationClass, 100);
+		  }
+
+			addAnimationClass();
+		}
 	}
 
 	// Добавление класса loaded когда страница полность загружена
-	function addLoadedClass() {
+	/*function addLoadedClass() {
 		window.addEventListener("load", function () {
 			setTimeout(function () {
 				document.documentElement.classList.add('loaded');
@@ -378,7 +362,27 @@ $(function(){
 		});
 	}
 
-	addLoadedClass();
+	addLoadedClass();*/
+
+
+	// Добавление класса loaded когда страница полность загружена GPT
+	function addLoadedClass() {
+	  var htmlElement = document.querySelector('html');
+	  htmlElement.classList.add('loaded');
+	}
+
+	if (document.readyState === 'complete') {
+	  addLoadedClass();
+	  startAnimation();
+	}
+	else {
+	  window.addEventListener('load', addLoadedClass);
+	  startAnimation();
+	}
+
+
+
+
 
 	// Эффект при наведении на каждую букву
 	function addAnimationClass() {
@@ -413,12 +417,16 @@ $(function(){
 	addAnimationClass();
 
 	// Для главной буквы H1 отключаем доп анимацию
-	const animationLogo = document.querySelector('.hero__highlight');
+	let heroTitle = document.querySelector('.hero__title');
+    if (heroTitle) 
+    {
+		const animationLogo = document.querySelector('.hero__highlight');
 
-	animationLogo.addEventListener('mouseover', function() {
-	  this.classList.remove('animation-logo');
-	  this.classList.remove('bounceIn');
-	});
+		animationLogo.addEventListener('mouseover', function() {
+		  this.classList.remove('animation-logo');
+		  this.classList.remove('bounceIn');
+		});
+	}
 
 
 
@@ -507,5 +515,76 @@ $(function(){
 		$('body').toggleClass('dropmenu')
 	})
 
+
+	// paralax эффект
+	class t {
+	    constructor(t, e = null) {
+	        if (
+	            ((this.config = Object.assign({
+	                    init: !0,
+	                    logging: !0
+	                }, t)),
+	                this.config.init)
+	        ) {
+	            const t = document.querySelectorAll("[data-prlx-mouse]");
+	            t.length ?
+	                (this.paralaxMouseInit(t),
+	                    this.setLogging(`Проснулся, слежу за объектами: (${t.length})`)) :
+	                this.setLogging("Нет ни одного объекта. Сплю...zzZZZzZZz...");
+	        }
+	    }
+	    paralaxMouseInit(t) {
+	        t.forEach((t) => {
+	            const e = t.closest("[data-prlx-mouse-wrapper]"),
+	                n = t.dataset.prlxCx ? +t.dataset.prlxCx : 50,
+	                o = t.dataset.prlxCy ? +t.dataset.prlxCy : 200,
+	                i = t.hasAttribute("data-prlx-dxr") ? -1 : 1,
+	                s = t.hasAttribute("data-prlx-dyr") ? -1 : 1,
+	                a = t.dataset.prlxA ? +t.dataset.prlxA : 50;
+	            let l = 0,
+	                r = 0,
+	                d = 0,
+	                c = 0;
+
+	            function u(e = window) {
+	                e.addEventListener("mousemove", function(e) {
+	                    const n = t.getBoundingClientRect().top + window.scrollY;
+	                    if (n >= window.scrollY || n + t.offsetHeight >= window.scrollY) {
+	                        const t = window.innerWidth,
+	                            n = window.innerHeight,
+	                            o = e.clientX - t / 2,
+	                            i = e.clientY - n / 2;
+	                        (d = (o / t) * 100), (c = (i / n) * 100);
+	                    }
+	                });
+	            }!(function e() {
+	                (l += ((d - l) * a) / 1e3),
+	                (r += ((c - r) * a) / 1e3),
+	                (t.style.cssText = `transform: translate3D(${(i * l) / (n / 10)}%,${
+	          (s * r) / (o / 10)
+	        }%,0);`),
+	                requestAnimationFrame(e);
+	            })(),
+	            e ? u(e) : u();
+	        });
+	    }
+	    setLogging(t) {
+	        this.config.logging &&
+	            (function(t) {
+	                setTimeout(() => {
+	                    window.FLS && console.log(t);
+	                }, 0);
+	            })(`[PRLX Mouse]: ${t}`);
+	    }
+	}
+
+	const myParallax = new t({ init: true, logging: true });
+
+	// Portfolio
+	$(document).on('click', '.portfolio__item', function () {
+		let link = $(this).data('link')
+
+		$('.popup-port').attr('href', link)
+	})
+
 })
-	
