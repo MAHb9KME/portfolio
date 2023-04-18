@@ -101,6 +101,16 @@ main {
     opacity: 1; 
 } 
 
+.portfolio__subtitle {
+    transform: translate(0px, 120%); 
+    opacity: 0; 
+    transition: all 0.8s ease 0s; 
+}
+.portfolio__subtitle._active { 
+    transform: translate(0px, 0px); 
+    opacity: 1; 
+} 
+
 .xtitle::before,
 .xtitle::after,
 .xsubtitle::before,
@@ -1189,7 +1199,7 @@ hr {
     margin: 0;
     row-gap: 20px;
 }
-.menu__burger {
+.menu-burger {
     display: none;
 }
 .menu__logo-box {

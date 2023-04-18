@@ -502,6 +502,10 @@ $(function(){
 	}, 300 )
 
 
+	// Открытие бургер меню
+	$(document).on('click', '.menu-burger', function(){
+		$('body').toggleClass('dropmenu')
+	})
 
 })
 	

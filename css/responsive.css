@@ -35,14 +35,46 @@
 	    right: 0;
 	    top: 0;
 	    bottom: 0;
-	    z-index: -5;
 	    width: 100%;
 	    align-items: center;
-	    -webkit-transition: opacity 0s 0.4s, z-index 0s 0.7s;
-	    -o-transition: opacity 0s 0.4s, z-index 0s 0.7s;
-	    transition: opacity 0s 0.4s, z-index 0s 0.7s;
-	    opacity: 0;
+	    display: none;
 	}
+
+	.menu__social {
+	    display: flex;
+	    flex-direction: column;
+	    align-items: flex-end;
+	    padding-bottom: 25px;
+	}
+
+	.menu__nav {
+	    align-self: stretch;
+	}
+
+	.social__ul {
+	    margin-top: auto;
+	}
+
+	.menu__link {
+	    padding: 18px 10px;
+	}
+
+	.menu__link:hover {
+	    color: #909096 !important;
+	}
+
+	.social__link {
+		transform: scale(1) !important;
+	}
+
+	.dropmenu .menu__burger {
+	    -webkit-transition: visibility 0s 0s, z-index 0s 0s;
+	    -o-transition: visibility 0s 0s, z-index 0s 0s;
+	    transition: visibility 0s 0s, z-index 0s 0s;
+	    z-index: 99;
+	    opacity: 1;
+	}
+
 	.portfolio__project {
 	    margin: 0 0 10px;
 	}
@@ -63,6 +95,64 @@
 	}
 	.about__text {
 	    max-width: 52%;
+	}
+
+	.menu-burger {
+        position: fixed;
+	    top: 10px;
+	    right: 10px;
+	    width: 50px;
+	    height: 50px;
+	    z-index: 100;
+	    background-color: #1d1d1d;
+	    display: flex;
+	    align-items: center;
+	    justify-content: center;
+	    border-radius: 3px;
+	    border: none;
+	    cursor: pointer;
+	}
+
+	.menu-burger__btn {
+	    width: 25px;
+	    display: flex;
+	    justify-content: center;
+	    flex-direction: column;
+	    align-items: center;
+	    position: relative;
+	    margin: 0 auto;
+	}
+
+	.menu-burger__btn:after, 
+	.menu-burger__btn:before, 
+	.menu-burger__btn span {
+	    content: "";
+	    display: block;
+	    width: 100%;
+	    height: 3px;
+	    background-color: #fff;
+	    border-radius: 1px;
+	    margin: 3px 0;
+	    transition: .2s all;
+	}
+
+	.dropmenu .menu {
+		display: flex;
+	}
+
+	.dropmenu .menu-burger__btn:before {
+	    transform: rotate(-45deg);
+	    margin-top: 10px;
+	}
+
+	.dropmenu .menu-burger__btn span {
+	    transform: rotate(45deg);
+	    margin-top: -6px;
+	}
+
+	.dropmenu .menu-burger__btn:after {
+	    bottom: 0px;
+	    opacity: 0;
 	}
 }
 
