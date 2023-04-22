@@ -127,13 +127,13 @@ main {
 
 .xtitle::before {
     content: '<h2>';
-    top: -10px;
+    top: -13px;
     left: -15px;
 }
 .xtitle::after {
     content: '</h2>';
     left: -15px;
-    bottom: -18px;
+    bottom: -21px;
 }
 
 .xsubtitle::before {
