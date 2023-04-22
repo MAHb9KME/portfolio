@@ -9,7 +9,7 @@
 /* critical.css START */
 body, html{
     font-family: "Open Sans", sans-serif;
-    font-size: 15px;
+    font-size: 16px;
     color: #fff;
     margin: 0;
     padding: 0;
@@ -1531,7 +1531,7 @@ html.loaded .hero__wrbutton {
     gap: 20px;
 }
 .portfolio__subtitle {
-    font-size: 15px;
+    font-size: 16px;
     line-height: 140%;
     max-width: 800px;
     margin: 0 0 15px;
@@ -1653,6 +1653,15 @@ html.loaded .hero__wrbutton {
     text-shadow: 0px 2px 1px rgb(0 0 0 / 0%), 0 0 0px rgb(0 0 0 / 0%);
 }
 
+.page-work .portfolio__projects {
+    transform: translate(0px, -120%);
+    transition: all 0.3s ease 0s;
+    opacity: 0;
+}
+.page-work ._active .portfolio__projects {
+    transform: translate(0px, 0%);
+    opacity: 1;
+}
 
 .about {
     display: flex;
@@ -1676,6 +1685,9 @@ html.loaded .hero__wrbutton {
     z-index: 1;
     transition: 1s all ease-out;
     /*-webkit-text-stroke: 0.5px #13ba00;*/
+}
+.page-skills .about::after {
+    content: 'Skills';
 }
 .about._active::after {
     left: 0;
