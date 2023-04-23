@@ -195,6 +195,14 @@
 		max-width: 100%;
 		margin-bottom: 50px;
 	}
+	.about__skill-box {
+		width: 100%;
+		height: 500px;
+		position: relative;
+	}
+	.about .skills-charts {
+		width: 100%;
+	}
 }
 
 @media screen and (max-width:992px){
@@ -237,6 +245,11 @@
 	.spoke {
 	    height: 80px;
 	}
+
+	#canvas {
+		display: none;
+	}
+
 }
 
 @media screen and (max-width:960px){
@@ -445,6 +458,12 @@
 	}
 	.title {
 	    font-size: 50px;
+	}
+	.about__skill-box {
+		height: 400px;
+	}
+	.about #myCanvas {
+	    width: 160%;
 	}
 
 }

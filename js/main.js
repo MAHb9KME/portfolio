@@ -495,6 +495,47 @@ $(function(){
 	  window.addEventListener("scroll", animOnScroll);
 	}
 
+	/*let chars = $('.portfolio__title').blast({
+  		delimiter: 'character',
+		returnGenerated: false
+	});
+
+	chars.each(function(i) {
+	  $(this).css({
+	    opacity: 0
+	  })
+
+	  .delay(i * 45)
+
+	  .animate({ animation: rubberBand }, 300);
+	});*/
+
+
+	// Paralax курсор мыши
+	if ($('#canvas').length) {
+	  initOciliator(false);
+	}
+
+	// Сфера, страница skills
+	if( ! $('#myCanvas').tagcanvas({
+	    textColour : '#08FDD8',
+	    outlineThickness : 0.5,
+	    outlineColour : '#FE0853',
+	    maxSpeed : 0.06,
+	    freezeActive:true,
+	    shuffleTags:true,
+	    shape:'sphere',
+	    zoom:0.8,
+	    noSelect:true,
+	    textFont:null,
+	    pinchZoom:true,
+	    wheelZoom:false,
+	    freezeDecel:true,
+	    fadeIn:3000,
+	    initial: [0.3,-0.1],
+	    depth : 1.1
+	})) 
+
 
 	// Функция рассчета скролла
 	function offset(el) { 
@@ -505,9 +546,9 @@ $(function(){
 	} 
 	
 	// Инициализация 
-	setTimeout( function(){ 
+	/*setTimeout( function(){ 
 	    animOnScroll(); 
-	}, 300 )
+	}, 300 )*/
 
 
 	// Открытие бургер меню
@@ -516,8 +557,8 @@ $(function(){
 	})
 
 
-	// paralax эффект
-	class t {
+	// paralax эффект на изображение
+	/*class t {
 	    constructor(t, e = null) {
 	        if (
 	            ((this.config = Object.assign({
@@ -578,7 +619,7 @@ $(function(){
 	    }
 	}
 
-	const myParallax = new t({ init: true, logging: true });
+	const myParallax = new t({ init: true, logging: true });*/
 
 	// Portfolio
 	$(document).on('click', '.portfolio__item', function () {

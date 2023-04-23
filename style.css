@@ -1207,7 +1207,7 @@ hr {
 }
 
 .blast {
-    opacity: 0;
+    /*opacity: 0;*/
     display: inline-block;
     -webkit-transition: all 0.3s ease-out;
     -o-transition: all 0.3s ease-out;
@@ -1343,7 +1343,7 @@ hr {
     top: 31px;
     left: auto;
     right: 50px;
-    bottom: -30px;
+    bottom: 0px;
     z-index: 1;
 
     transition: opacity 0.5s 1.5s, -webkit-transform 0.5s 1.5s;
@@ -1671,6 +1671,10 @@ html.loaded .hero__wrbutton {
     min-height: 70vh;
     position: relative;
 }
+.page-skills .about,
+.page-about .about {
+    min-height: 100vh;
+}
 .about::after {
     content: 'About';
     font-size: 370px;
@@ -1703,6 +1707,9 @@ html.loaded .hero__wrbutton {
 .about__text {
     max-width: 45%;
 }
+.about__skill-box {
+    width: 50%;
+}
 .portfolio__wrtitle {
 }
 .about__title {
@@ -1716,15 +1723,15 @@ html.loaded .hero__wrbutton {
     width: 50%;
     position: relative;
 
+    /*transform: translateY(120%);
+    transition: opacity 0.9s, transform 0.9s;
+    transition: opacity 0.9s, transform 0.9s;*/
     transition: opacity 0.9s;
-    transition: opacity 0.9s, transform 0.9s;
-    transition: opacity 0.9s, transform 0.9s;
-    transform: translateY(120%);
     opacity: 0;
 }
 
 .about._active .about__sphere {
-    transform: translateY(0px);
+    /*transform: translateY(0px);*/
     opacity: 1;
 }
 
@@ -1880,6 +1887,9 @@ html.loaded .hero__wrbutton {
 .about #myCanvas {
     margin: auto;
     width: 100%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .about #myCanvasContainer li a {
