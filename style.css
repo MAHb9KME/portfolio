@@ -1207,7 +1207,7 @@ hr {
 }
 
 .blast {
-    /*opacity: 0;*/
+    opacity: 0;
     display: inline-block;
     -webkit-transition: all 0.3s ease-out;
     -o-transition: all 0.3s ease-out;
@@ -1282,7 +1282,8 @@ hr {
     width: 100%;
     transition: 0.3s all;
 }
-.menu__link:hover {
+.menu__link:hover,
+.menu__link.menu__link--active {
     color: #13ba00;
 }
 .menu__li:first-child {

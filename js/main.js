@@ -1,83 +1,9 @@
-// Получаем рандомное число
-
-function getRandom(min, max) {
-	var rand = Math.floor(Math.random() * (max - min + 1)) + min;
-	return Math.floor(rand/min)*min;  
-}
-	
-	
-// Функция склонения слов после чисел
-	
-function declOfNum(number, titles) {  
-	cases = [2, 0, 1, 1, 1, 2];  
-	return titles[ (number%100>4 && number%100<20)? 2 : cases[(number%10<5)?number%10:5] ];  
-}  
-
-
-function tpaneScroll()
-{
-	var $scrollTop = parseInt(jQuery(window).scrollTop()),
-		$scrollPane = jQuery('body'),
-		h = jQuery('.header-contact').outerHeight(),
-		tot_h = jQuery('.header-fix').outerHeight(),
-		w = parseInt(jQuery(window).width())
-		
-	if($scrollTop > h)
-	{
-		if(!$scrollPane.hasClass('fix'))
-		{
-			$scrollPane.addClass('fix')
-
-			if( jQuery(window).width() > 700)
-			{
-				jQuery('.main-screen').css("margin-top", tot_h)
-			}
-		}
-	}
-	else
-	{
-		if( jQuery(window).width() > 700)
-		{
-			if($scrollPane.hasClass('fix'))
-			{
-				$scrollPane.removeClass('fix')
-
-				if( jQuery(window).width() > 700)
-				{
-					jQuery('.main-screen').css("margin-top", "0")
-				}
-			}
-		}
-	}
-
-	if( jQuery(window).width() < 700)
-	{
-		jQuery('.main-screen').css("margin-top", tot_h)
-	}
-}
-
-
 $(function(){
-	
-	tpaneScroll()
-	$(window).resize(function(){tpaneScroll()})
-	$(document).scroll(function(){tpaneScroll()})
-
-	
-	// Маска для телефона
-	
-	if($('input.phone').length)
-		$('input.phone').inputmask("+7 (999) 999-99-99");
-	
-	if($('input[name=xs_phone]').length)
-		$('input[name=xs_phone]').inputmask("+7 (999) 999-99-99");
-	
 
 	// Скролл к элементам с хэшем
 
-	$('.xs_hash').click(function(event)
-	{
-		var height = parseInt(Math.round($($(this).attr('href')).offset().top)) - parseInt($('header').height())
+	$(document).on('click', '.xs_hash', function(event){
+		var height = parseInt(Math.round($($(this).attr('href')).offset().top))
 		
 		$('html, body').stop().animate({
 			scrollTop: height
@@ -98,57 +24,6 @@ $(function(){
 	{
 		$('body').removeClass('show_menu')
 	})
-	
-	/*$(document).click(function(event)
-	{
-		if (
-			$(event.target).closest(".header-menu").length 
-		) return;
-
-		$('body').removeClass('show_menu')
-
-		event.stopPropagation();
-	})*/
-
-	
-	// Скрытие селектора при клике вне его
-	
-	$(document).mouseup(function (e)
-	{
-		var div = $(".hide_click_away")
-		
-		if (!div.is(e.target) && div.has(e.target).length === 0) 
-			div.hide();
-	})
-	
-	
-	// Активируем слайдер
-
-	$('.xs_slider').slick({
-  		slidesToShow: 3,
-  		slidesToScroll: 1,
-		arrows: false,
-		infinite: false,
-		touchMove: false,
-		swipeToSlide: false,
-		touchThreshold: false,
-		swipe: false,
-  		responsive: [
-		{
-		    breakpoint: 900,
-		    settings: {
-				slidesToShow: 2,
-				slidesToScroll: 1
-			}
-		},
-		{
-		    breakpoint: 600,
-		    settings: {
-		        slidesToShow: 1,
-		        slidesToScroll: 1
-			}
-		}]
-	});
 	
 	
 	// Обратная связь
@@ -217,43 +92,6 @@ $(function(){
 			}
 		})
 	})
-
-
-	// разворот дочерних пунктов меню
-
-	if( $(document).width() <= 960)
-	{
-		$('header nav ul li.menu-item-has-children > a').click(function(){
-			
-		
-		 	$(this).toggleClass('rotate');
-
-	        var menu = $(this).next(); 
-	        if( $(menu).is(':visible')){
-	            $(menu).slideUp(400);
-	        }
-	        else{
-	            $(menu).slideDown(400);
-	        }
-			
-			return false;
-			
-		});
-	}
-
-
-	// Прикрепление фото к форме
-    $(document).on('change', '.work__upload-input', function(){
-		if(jQuery(this).val() != '') 
-		{
-			jQuery(this).parents('.work__upload').find('.work__upload-text').html('Фото прикреплено')
-		} 
-		else 
-		{
-			jQuery(this).next('.attache').removeClass('hover').text('Прикрепите фото персонажа')
-		}
-    })
-
 
 
     // Проверяем, можно ли использовать Webp формат
@@ -381,9 +219,6 @@ $(function(){
 	}
 
 
-
-
-
 	// Эффект при наведении на каждую букву
 	function addAnimationClass() {
 	  var blasts = document.querySelectorAll(".main-blast .blast");
@@ -432,7 +267,7 @@ $(function(){
 
 
 	// Добавление анимации к последующим Title
-	function startAnimationTitle() {
+	/*function startAnimationTitle() {
 		var blasts = document.querySelectorAll(".main-blast._active .blast");
 		var i = 0;
 		var logoAnimation = false;
@@ -459,46 +294,64 @@ $(function(){
 	  }
 
 	  addAnimationClass();
-	}
+	}*/
 
-	// Запуск анимации к последующим Title, один раз при скролле
-	const animItems = document.querySelectorAll("._anim-items");
-	if (animItems.length > 0) {
-	  function animOnScroll() {
-	    for (let index = 0; index < animItems.length; index++) {
-	      const animItem = animItems[index];
-	      const animItemHeight = animItem.offsetHeight;
-	      const animItemOffset = offset(animItem).top;
-	      const animStart = 4;
-	      let animItemPoint = window.innerHeight - animItemHeight / animStart;
-	      if (animItemHeight > window.innerHeight) {
-	        animItemPoint = window.innerHeight - window.innerHeight / animStart;
-	      }
-	      if (animItem.classList.contains("_active") &&
-	          !animItem.classList.contains("_animate-once") &&
-	          !animItem.classList.contains("animated")) {
-	        startAnimationTitle();
-	        animItem.classList.add("_animate-once");
-	        animItem.classList.add("animated");
-	      }
-	      if (pageYOffset > animItemOffset - animItemPoint &&
-	          pageYOffset < animItemOffset + animItemHeight) {
-	        animItem.classList.add("_active");
-	      } else {
-	        if (animItem.classList.contains("animated")) {
-	          animItem.classList.remove("animated");
-	        }
-	        /*if(!animItem.classList.contains('_anim-no-hide')) { animItem.classList.remove('_active') }*/
-	      }
-	    }
-	  }
-	  window.addEventListener("scroll", animOnScroll);
-	}
 
-	/*let chars = $('.portfolio__title').blast({
+	// Анимация при скролле  
+	const animItems = document.querySelectorAll('._anim-items');  
+	// Событие, при скролле начинается эта функция 
+	window.addEventListener('scroll', animOnScroll);  
+
+	function animOnScroll() {  
+	  for (let index = 0; index < animItems.length; index++) {  
+	    // Получаем каждый из элементов массива 
+	    const animItem = animItems[index]; 
+
+	    // Получаем высоту каждого элемента 
+	    const animItemHeight = animItem.offsetHeight;
+
+	    // Как далеко объект от верха страницы 
+	    const animItemOffset = offset(animItem).top; 
+
+	    // 1/4 высоты объекта 
+	    const animStart = 4; 
+
+	    // Высчитываем Высота окна браузера - высота объекта / на коэф. 
+	    let animItemPoint = window.innerHeight - animItemHeight / animStart;  
+
+	    // Если высота объекта выше высоты окна браузера 
+	    if (animItemHeight > window.innerHeight) {  
+	      animItemPoint = window.innerHeight - window.innerHeight / animStart;  
+	    }  
+
+	    // Если мы прокрутили нужное кол-во px то добавляем класс 
+	    // Нужно для повтоной анимации 
+	    if ((pageYOffset > animItemOffset - animItemPoint) && pageYOffset < (animItemOffset + animItemHeight)) {  
+	      animItem.classList.add('_active')  
+	    } else {  
+	      // Повторная анимация 
+	      /*if(!animItem.classList.contains('_anim-no-hide')) {  
+	        animItem.classList.remove('_active')  
+	      } */ 
+	    }  
+	  }  
+	}  
+
+	// Инициализация  
+	setTimeout( function(){  
+	    animOnScroll();  
+	}, 300 )
+
+
+
+
+	// Blast для последующих title
+	/*let chars = $('._title_anim h2').blast({
   		delimiter: 'character',
 		returnGenerated: false
-	});
+	});*/	
+
+	let chars = $('._title_anim h2')
 
 	chars.each(function(i) {
 	  $(this).css({
@@ -507,8 +360,47 @@ $(function(){
 
 	  .delay(i * 45)
 
-	  .animate({ animation: rubberBand }, 300);
-	});*/
+	  .animate({ opacity: 1 }, 300);
+	});
+
+	const observerCallback = function(mutationsList, observer) {
+	  for (let mutation of mutationsList) {
+	    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+	      if (mutation.target.classList.contains('_active')) {
+
+	        var sectionAbout = jQuery('._title_anim');
+	        var a = 0;
+	        sectionAbout.find("h2 .blast").each(function(){
+	            var el = jQuery(this);
+	            setTimeout(function(){
+	                el.addClass('animated bounceIn');
+	            },a);
+	            a = a + 80;
+	        });
+	        setTimeout(function(){
+	            sectionAbout.find(".blast").removeClass('animated bounceIn');
+	            sectionAbout.find(".blast").css('opacity',1);
+	            sectionAbout.find(".blast").mouseenter(function (){
+	                var el = jQuery(this);
+	                jQuery(this).addClass('animated rubberBand');
+	                jQuery(this).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+	                    el.removeClass('animated rubberBand');
+	                });
+	            });
+	        },2000);
+	        // отключаем Observer, когда наш код был запущен
+	        observer.disconnect();
+	      }
+	    }
+	  }
+	};
+
+	// создаем Observer для элемента с классом portfolio
+	let portfolio = document.querySelector('.portfolio__wrtitle');
+	let observer = new MutationObserver(observerCallback);
+	observer.observe(portfolio, { attributes: true });
+
+
 
 
 	// Paralax курсор мыши
@@ -544,16 +436,17 @@ $(function(){
 		scrollTop = window.pageYOffset || document.documentElement.scrollTop; 
 		return { top: rect.top + scrollTop, left: rect.left + scrollLeft } 
 	} 
-	
-	// Инициализация 
-	/*setTimeout( function(){ 
-	    animOnScroll(); 
-	}, 300 )*/
-
 
 	// Открытие бургер меню
 	$(document).on('click', '.menu-burger', function(){
 		$('body').toggleClass('dropmenu')
+	})
+
+	// Portfolio
+	$(document).on('click', '.portfolio__item', function () {
+		let link = $(this).data('link')
+
+		$('.popup-port').attr('href', link)
 	})
 
 
@@ -620,12 +513,5 @@ $(function(){
 	}
 
 	const myParallax = new t({ init: true, logging: true });*/
-
-	// Portfolio
-	$(document).on('click', '.portfolio__item', function () {
-		let link = $(this).data('link')
-
-		$('.popup-port').attr('href', link)
-	})
 
 })
