@@ -363,42 +363,84 @@ $(function(){
 	  .animate({ opacity: 1 }, 300);
 	});
 
-	const observerCallback = function(mutationsList, observer) {
-	  for (let mutation of mutationsList) {
-	    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-	      if (mutation.target.classList.contains('_active')) {
+	// АНИМАЦИЯ каждой буквы у h2
+	function animateHeadings() {
+	  var sectionTitle = jQuery(this);
+	  var a = 0;
+	  sectionTitle.find("h2 .blast").each(function(){
+	    var el = jQuery(this);
+	    setTimeout(function(){
+	      el.addClass('animated bounceIn');
+	    },a);
+	    a = a + 80;
+	  });
+	  setTimeout(function(){
+	    sectionTitle.find(".blast").removeClass('animated bounceIn');
+	    sectionTitle.find(".blast").css('opacity',1);
+	    sectionTitle.find(".blast").mouseenter(function (){
+	      var el = jQuery(this);
+	      jQuery(this).addClass('animated rubberBand');
+	      jQuery(this).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+	        el.removeClass('animated rubberBand');
+	      });
+	    });
+	  },2000);
+	}
 
-	        var sectionAbout = jQuery('._title_anim');
-	        var a = 0;
-	        sectionAbout.find("h2 .blast").each(function(){
-	            var el = jQuery(this);
-	            setTimeout(function(){
-	                el.addClass('animated bounceIn');
-	            },a);
-	            a = a + 80;
-	        });
-	        setTimeout(function(){
-	            sectionAbout.find(".blast").removeClass('animated bounceIn');
-	            sectionAbout.find(".blast").css('opacity',1);
-	            sectionAbout.find(".blast").mouseenter(function (){
-	                var el = jQuery(this);
-	                jQuery(this).addClass('animated rubberBand');
-	                jQuery(this).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
-	                    el.removeClass('animated rubberBand');
-	                });
-	            });
-	        },2000);
-	        // отключаем Observer, когда наш код был запущен
-	        observer.disconnect();
-	      }
-	    }
-	  }
-	};
+	if ($('.portfolio__wrtitle').length) {
+		// создаем Observer для элемента с классом portfolio__wrtitle
+		let portfolio = document.querySelector('.portfolio__wrtitle');
+		let portfolioObserver = new MutationObserver(function(mutationsList, observer) {
+		  for (let mutation of mutationsList) {
+		    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+		      if (mutation.target.classList.contains('_active')) {
+		        animateHeadings.call(mutation.target);
+		        observer.disconnect();
+		      }
+		    }
+		  }
+		});
+		
+		portfolioObserver.observe(portfolio, { attributes: true });
+	}
 
-	// создаем Observer для элемента с классом portfolio
-	let portfolio = document.querySelector('.portfolio__wrtitle');
-	let observer = new MutationObserver(observerCallback);
-	observer.observe(portfolio, { attributes: true });
+	if ($('.about__wrtitle').length) {
+		// создаем Observer для элемента с классом about__wrtitle
+		let about = document.querySelector('.about__wrtitle');
+		let aboutObserver = new MutationObserver(function(mutationsList, observer) {
+		  for (let mutation of mutationsList) {
+		    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+		      if (mutation.target.classList.contains('_active')) {
+		        animateHeadings.call(mutation.target);
+		        observer.disconnect();
+		      }
+		    }
+		  }
+		});
+
+		aboutObserver.observe(about, { attributes: true });
+	}
+
+
+	// создаем Observer для элемента с классом contact-info__wrtitle
+	if ($('.contact-info__wrtitle').length) {
+		let contact = document.querySelector('.contact-info__wrtitle');
+		let contactObserver = new MutationObserver(function(mutationsList, observer) {
+		  for (let mutation of mutationsList) {
+		    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+		      if (mutation.target.classList.contains('_active')) {
+		        animateHeadings.call(mutation.target);
+		        observer.disconnect();
+		      }
+		    }
+		  }
+		});
+
+		contactObserver.observe(contact, { attributes: true });
+	}
+
+
+
 
 
 
