@@ -400,7 +400,7 @@ $(function(){
 		    }
 		  }
 		});
-		
+
 		portfolioObserver.observe(portfolio, { attributes: true });
 	}
 
@@ -451,24 +451,26 @@ $(function(){
 	}
 
 	// Сфера, страница skills
-	if( ! $('#myCanvas').tagcanvas({
-	    textColour : '#08FDD8',
-	    outlineThickness : 0.5,
-	    outlineColour : '#FE0853',
-	    maxSpeed : 0.06,
-	    freezeActive:true,
-	    shuffleTags:true,
-	    shape:'sphere',
-	    zoom:0.8,
-	    noSelect:true,
-	    textFont:null,
-	    pinchZoom:true,
-	    wheelZoom:false,
-	    freezeDecel:true,
-	    fadeIn:3000,
-	    initial: [0.3,-0.1],
-	    depth : 1.1
-	})) 
+	if ($('#myCanvas').length) {
+		if( $('#myCanvas').tagcanvas({
+		    textColour : '#08FDD8',
+		    outlineThickness : 0.5,
+		    outlineColour : '#FE0853',
+		    maxSpeed : 0.06,
+		    freezeActive:true,
+		    shuffleTags:true,
+		    shape:'sphere',
+		    zoom:0.8,
+		    noSelect:true,
+		    textFont:null,
+		    pinchZoom:true,
+		    wheelZoom:false,
+		    freezeDecel:true,
+		    fadeIn:3000,
+		    initial: [0.3,-0.1],
+		    depth : 1.1
+		})) ;
+	}
 
 
 	// Функция рассчета скролла
